@@ -16,6 +16,9 @@ import adubbz.gct.clang.Cursor;
 import adubbz.gct.clang.CursorKind;
 import adubbz.gct.clang.TranslationUnit;
 import adubbz.gct.clang.UnsavedFile;
+
+import ghidra.util.Msg;
+
 import adubbz.gct.clang.error.ParseException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -48,6 +51,7 @@ typedef unsigned long long u64;
 
         rootCursor.visitChildren((cursor, parent) ->
         {
+            Msg.info(this, "Enum: " + cursor.kind());
             switch (cursor.kind())
             {
                 case ENUM_DECL:
@@ -56,11 +60,16 @@ typedef unsigned long long u64;
                 case TYPEDEF_DECL:
                     return parseTypedef(typePool, cursor);
 
+                case CLASS_DECL:
                 case STRUCT_DECL:
                     return parseStruct(typePool, cursor);
 
                 case UNION_DECL:
                     return parseUnion(typePool, cursor);
+                
+                
+                default:
+                    Msg.info(this, "default case in cursor visit");
             }
 
            return Cursor.ChildVisitResult.RECURSE;

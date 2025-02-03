@@ -86,27 +86,31 @@ public class CreateSourceTypeDialog extends DialogComponentProvider
         });
 
         panel.add(new RTextScrollPane(codeField), BorderLayout.CENTER);
-
+        Msg.info(this, "Creating panel");
         return panel;
     }
 
     @Override
     protected void okCallback()
     {
+        Msg.info(this, "Running OK callback");
         try
         {
             this.parser.parse(this.typePool, this.codeField.getText());
+            Msg.info(this, "Parsed without error");
         }
         catch (ParseException e)
         {
+            Msg.info(this, "Failed to parse");
             Msg.error(this, "Failed to parse code", e);
             return;
         }
-
+        Msg.info(this, "resolving type pool");
         TypePool.ResolutionResult result = typePool.resolve();
-
+        Msg.info(this, "type pool resolved");
         if (result.isSuccess())
         {
+            Msg.info(this, "result.isSuccess() returned true");
             List<DataType> dataTypes = ((TypePool.ResolutionResultSuccess) result).getDataTypes();
             int transaction = this.dataTypeManager.startTransaction("Add processed data types");
             dataTypes.forEach(t ->
@@ -123,10 +127,11 @@ public class CreateSourceTypeDialog extends DialogComponentProvider
         }
         else if (result instanceof TypePool.ResolutionResultUnresolvedDependencies)
         {
+            Msg.info(this, "Unable to locate required types");
             Msg.error(this, "Unable to locate required types: " + ((TypePool.ResolutionResultUnresolvedDependencies)result).getDependencies());
             return;
         }
-
+        Msg.info(this, "Closing panel");
         this.close();
     }
 

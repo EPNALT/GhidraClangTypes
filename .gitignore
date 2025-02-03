@@ -4,3 +4,7 @@ eclipse/
 dist/
 build/
 lib/
+.DS_Store
+**/.DS_Store
+*~
+**/*~

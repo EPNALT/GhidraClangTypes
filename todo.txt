@@ -1,0 +1,2 @@
+- Make types go into selected archive, not just archive of currently open program
+- Implement (and find a good testcase for) addition of all function type signatures and classes with proper layout (use Clang to spit the layout somehow)

@@ -23,6 +23,7 @@ import ghidra.framework.plugintool.util.PluginStatus;
 import ghidra.program.model.listing.Program;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ghidra.util.Msg;
 
 @PluginInfo(
         status = PluginStatus.STABLE,
@@ -54,5 +55,6 @@ public class GCTPlugin extends ProgramPlugin
 
         // Add our custom actions
         this.tool.addLocalAction(dtmPlugin.getProvider(), new CreateSourceTypeAction(program.getDataTypeManager(), dtmPlugin));
+        Msg.info(this, "Custom actions added");
     }
 }

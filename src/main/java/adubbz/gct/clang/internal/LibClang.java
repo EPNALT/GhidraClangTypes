@@ -106,9 +106,9 @@ public interface LibClang extends Library
         if (isWindows())
             return "libclang";
 
-        // Use Xcode's clang to spare having multiple several-hundred-MB files
+        // CommandLineTools
         if (isMac())
-            return "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib";
+            return "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib";
 
         return "clang";
     }
